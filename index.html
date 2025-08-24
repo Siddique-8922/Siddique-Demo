@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusBlog | Future of Technology</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #06b6d4;
+            --accent: #10b981;
+            --text: #f8fafc;
+            --text-dark: #1e293b;
+            --bg-dark: #0f172a;
+            --bg-card-dark: #1e293b;
+            --bg-light: #f1f5f9;
+            --bg-card-light: #ffffff;
+            --gray: #94a3b8;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            --glow: 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        /* Hero Section with Background Image */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), 
+                        url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--gray);
+        }
+
+        .btn {
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: var(--transition);
+            background: var(--primary);
+            color: white;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+        /* Featured Posts Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .post-card {
+            background: var(--bg-card-dark);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .post-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--glow);
+        }
+
+        .post-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .post-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .post-card:hover .post-img img {
+            transform: scale(1.1);
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .post-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .post-meta i {
+            margin-right: 5px;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Modal for detailed content */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--bg-card-dark);
+            max-width: 800px;
+            margin: 40px auto;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            box-shadow: var(--glow);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--text);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card-dark);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            margin-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px 0;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-microchip"></i>
+                <span>NexusBlog</span>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Sales</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Exploring the Future of Technology</h1>
+            <p>Discover the latest innovations in AI, quantum computing, and biotechnology that are shaping our future world.</p>
+            <a href="#featured" class="btn">Explore Articles</a>
+        </div>
+    </section>
+
+    <!-- Featured Posts Section -->
+    <section id="featured">
+        <div class="container">
+            <h2 class="section-title">Featured Posts</h2>
+            <div class="posts-grid">
+                <!-- AI Technology Card -->
+               <article class="post-card" data-post="ai">
+    <div class="post-img">
+        <img src="ai-image.jpg" alt="Generative AI">
+    </div>
+    <div class="post-content">
+        <h3>The Rise of Generative AI in Creative Industries</h3>
+        <div class="post-meta">
+            <span><i class="far fa-calendar"></i> April 15, 2023</span>
+        </div>
+        <p>How artificial intelligence is transforming content creation, art, and design in unexpected ways.</p>
+        <a class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+    </div>
+</article>
+
+                <!-- Quantum Computing Card -->
+                <article class="post-card" data-post="quantum">
+                    <div class="post-img">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80" alt="Quantum Computing">
+                    </div>
+                    <div class="post-content">
+                        <h3>Quantum Computing: From Theory to Reality</h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> March 28, 2023</span>
+                        </div>
+                        <p>The latest breakthroughs in quantum computing and what they mean for the future of problem-solving.</p>
+                        <a class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                
+                <!-- Biotechnology Card -->
+                <article class="post-card" data-post="bio">
+                    <div class="post-img">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80" alt="Biotechnology">
+                    </div>
+                    <div class="post-content">
+                        <h3>Bioengineering and the Future of Healthcare</h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> March 12, 2023</span>
+                        </div>
+                        <p>How genetic engineering and biotechnology are revolutionizing medicine and treatment approaches.</p>
+                        <a class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for detailed content -->
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body">
+                <!-- Content will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About NexusBlog</h3>
+                    <p>Exploring the cutting edge of technology and its impact on society, business, and our daily lives.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 NexusBlog. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Post content data
+        const postContent = {
+            ai: {
+                title: "The Rise of Generative AI in Creative Industries",
+                date: "April 15, 2023",
+                image: "ai-image.jpg",
+                content: `
+                    <p>Generative AI is revolutionizing creative industries by enabling new forms of art, design, and content creation. These systems can now produce original works that rival those created by humans.</p>
+                    
+                    <h3>Key Developments</h3>
+                    <p>Recent advancements in transformer architectures and diffusion models have dramatically improved the quality of AI-generated content. Tools like DALL-E, Midjourney, and GPT-4 are becoming standard in creative workflows.</p>
+                    
+                    <h3>Impact on Creative Professions</h3>
+                    <p>Rather than replacing human creatives, AI is augmenting their capabilities. Designers are using AI to generate initial concepts, writers are using it to overcome creative blocks, and artists are collaborating with AI to create entirely new forms of expression.</p>
+                    
+                    <h3>Future Outlook</h3>
+                    <p>As these technologies continue to evolve, we can expect even more sophisticated collaborations between humans and AI, potentially giving rise to entirely new art forms and creative disciplines that we can't yet imagine.</p>
+                `
+            },
+            quantum: {
+                title: "Quantum Computing: From Theory to Reality",
+                date: "March 28, 2023",
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <p>Quantum computing has transitioned from theoretical physics to tangible machines that are beginning to solve real-world problems. This technology promises to revolutionize fields from cryptography to drug discovery.</p>
+                    
+                    <h3>Recent Breakthroughs</h3>
+                    <p>Companies like IBM, Google, and Rigetti have made significant progress in increasing qubit count and stability. Quantum supremacy—the point where quantum computers outperform classical ones—has been demonstrated for specific tasks.</p>
+                    
+                    <h3>Practical Applications</h3>
+                    <p>Quantum computers are particularly suited for optimization problems, molecular simulation, and factorization. Industries are exploring uses in logistics, financial modeling, and materials science.</p>
+                    
+                    <h3>Challenges Ahead</h3>
+                    <p>Despite progress, quantum computing still faces significant hurdles including error correction, decoherence, and the need for extreme cooling. Researchers are working on both hardware and algorithmic solutions to these challenges.</p>
+                `
+            },
+            bio: {
+                title: "Bioengineering and the Future of Healthcare",
+                date: "March 12, 2023",
+                image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
+                content: `
+                    <p>Bioengineering is transforming healthcare through innovations in genetic engineering, tissue regeneration, and medical devices. These advances promise more personalized and effective treatments.</p>
+                    
+                    <h3>Gene Editing Revolution</h3>
+                    <p>CRISPR technology has made gene editing more precise and accessible. Researchers are developing treatments for genetic disorders, and clinical trials show promising results for conditions like sickle cell anemia and muscular dystrophy.</p>
+                    
+                    <h3>Tissue Engineering Advances</h3>
+                    <p>Scientists are now able to grow functional tissues and even simple organs in the lab. 3D bioprinting technology is advancing rapidly, with researchers working toward printing complex organs for transplantation.</p>
+                    
+                    <h3>Wearable Medical Devices</h3>
+                    <p>New generations of wearable devices can continuously monitor health metrics, detect abnormalities early, and even administer medications. These technologies enable more proactive and preventive healthcare approaches.</p>
+                    
+                    <h3>Ethical Considerations</h3>
+                    <p>As bioengineering capabilities expand, society must grapple with important ethical questions about genetic modification, human enhancement, and equitable access to advanced medical technologies.</p>
+                `
+            }
+        };
+
+        // Modal functionality
+        const modal = document.getElementById('postModal');
+        const modalBody = document.getElementById('modal-body');
+        const closeModal = document.querySelector('.close-modal');
+        const postCards = document.querySelectorAll('.post-card');
+
+        // Open modal with post content
+        postCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const postId = card.getAttribute('data-post');
+                const post = postContent[postId];
+                
+                if (post) {
+                    modalBody.innerHTML = `
+                        <h2>${post.title}</h2>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> ${post.date}</span>
+                        </div>
+                        <img src="${post.image}" alt="${post.title}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin: 20px 0;">
+                        <div class="post-content">
+                            ${post.content}
+                        </div>
+                    `;
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
